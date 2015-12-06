@@ -1,0 +1,3 @@
+Delete from APP.AGENT where AGENT_LNAME='Flanagan';
+INSERT into APP.AGENT(AGENT_FNAME, AGENT_LNAME, AGENT_ADDRESS1, AGENT_ADDRESS2) values('John', 'Flanagan', 'Cornageeha', 'Sligo');
+INSERT into APP.AGENT(AGENT_FNAME, AGENT_LNAME, AGENT_ADDRESS1, AGENT_ADDRESS2) values('Olivia', 'Flanagan', 'Kilcar', 'Donegal');
