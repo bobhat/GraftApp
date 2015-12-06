@@ -32,7 +32,7 @@ public static void testBlob() throws Exception {
     oos.close();
 	
 	Statement statement = dbConnection.createStatement();
-	statement.executeQuery("INSERT INTO PHOTOS );
+	//statement.executeQuery("INSERT INTO PHOTOS );
 }	
 	
 public static String getLName(String username) throws Exception{
@@ -70,14 +70,14 @@ public static String getLName(String username) throws Exception{
 			resultSet = statement.executeQuery("SELECT * FROM APP.AGENT");
 			
 			while (resultSet.next()){
-				Agents tempAgents = new Agents();
+			/*	Agents tempAgents = new Agents();
 				tempAgents.setAgentid(resultSet.getInt("AGENT_ID"));
 				tempAgents.setFirstName(resultSet.getString("AGENT_FNAME"));
 				tempAgents.setLastName(resultSet.getString("AGENT_LNAME"));
 				tempAgents.setAddress1String(resultSet.getString("AGENT_ADDRESS1"));
 				tempAgents.setAddress2String(resultSet.getString("AGENT_ADDRESS2"));
 				agentsArrayList.add(tempAgents);
-				System.out.println(tempAgents.getFirstName());
+				System.out.println(tempAgents.getFirstName());*/
 				
 			}
 		} catch (SQLException e) {
@@ -92,11 +92,11 @@ public static String getLName(String username) throws Exception{
 	
 	
 	
-	public static void main(String[] args) throws Exception {
+	/*public static void main(String[] args) throws Exception {
 		Boolean test = DatabaseChecks.checkUser("John","John");
 		System.out.println("return values is: " + test);
 
-	}
+	}*/
 
 
 
