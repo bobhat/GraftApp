@@ -1,5 +1,10 @@
 package graft.ie;
 
-public class ServerInterfaces {
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface ServerInterfaces extends Remote{
+	public boolean checkUser()
+			throws RemoteException;
 
 }

@@ -32,6 +32,7 @@ import javafx.geometry.Pos;
 public class WelcomePage extends Application{
 
 	private Stage primaryStage;
+	private Label welcomeLabel;
 	
 
 	public static void main(String[] args) {
@@ -45,7 +46,7 @@ public class WelcomePage extends Application{
 		primaryStage.setTitle("Welcome to Graft");
 		
 		
-		Label welcomeLabel = new Label("graft.ie");
+		welcomeLabel = new Label("graft.ie");
 		welcomeLabel.setFont(new Font("ITC Bauhaus", 40));
 		Image welcomeImage = new Image("image/blue-home-icon.png");
 		welcomeLabel.setGraphic(new ImageView(welcomeImage));
@@ -141,6 +142,7 @@ public class WelcomePage extends Application{
 				alert.showAndWait();
 				
 				System.out.println("Search button clicked");
+				 setLabel();
 				
 				
 			}
@@ -202,5 +204,9 @@ public class WelcomePage extends Application{
 			    );
 		return propPriceRangeList;
 	
+	}
+	public void setLabel()
+	{
+		welcomeLabel.setText("hellooooooo");
 	}
 }

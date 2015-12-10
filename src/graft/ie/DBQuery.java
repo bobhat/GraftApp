@@ -40,11 +40,7 @@ public static String getLName(String username) throws Exception{
 		DBConnection temp = new DBConnection();
 		dbConnection = temp.getDBConnection();
 		String getLNAME = "yyy";
-		
-		
-		
-		
-				
+						
 		Statement statement = dbConnection.createStatement();
 		resultSet = statement.executeQuery("SELECT * FROM APP.AGENT WHERE AGENT_FNAME = '" + username + "'");
 		while (resultSet.next()){
