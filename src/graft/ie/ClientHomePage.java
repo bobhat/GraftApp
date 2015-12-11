@@ -1,38 +1,37 @@
 package graft.ie;
 
-import javafx.application.*;
-import javafx.collections.ObservableList;
-import javafx.stage.Stage;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.paint.Color;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
+import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 
-
-public class WelcomePage extends Application{
-
+public class ClientHomePage extends Application{
+	
 	private Stage primaryStage;
 	private Label welcomeLabel;
+	private static final String HOST = "localhost";
 	
 
 	public static void main(String[] args) {
@@ -134,15 +133,32 @@ public class WelcomePage extends Application{
 		searchButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			public void handle(ActionEvent event) {
-				Alert alert = new Alert(AlertType.ERROR);
+				/*Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error Dialog");
 				alert.setHeaderText("Look, an Error Dialog");
 				alert.setContentText("Ooops, there was an error!");
 
-				alert.showAndWait();
+				alert.showAndWait();*/
 				
 				System.out.println("Search button clicked");
-				 setLabel();
+				setLabel();
+				
+				try {
+					ServerInterfaces checkPWD = (ServerInterfaces)Naming.lookup("rmi://" + HOST + "/ServerInterfaces");
+					checkPWD.checkUser();
+					
+					
+					
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				
 			}
@@ -207,6 +223,7 @@ public class WelcomePage extends Application{
 	}
 	public void setLabel()
 	{
-		welcomeLabel.setText("hellooooooo");
+		this.welcomeLabel.setText("hellooooooo");
 	}
+
 }

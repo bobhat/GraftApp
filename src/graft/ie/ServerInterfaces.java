@@ -4,7 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface ServerInterfaces extends Remote{
-	public boolean checkUser()
+	public void checkUser()
 			throws RemoteException;
 
 }

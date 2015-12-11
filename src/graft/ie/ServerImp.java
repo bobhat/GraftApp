@@ -1,23 +1,53 @@
 package graft.ie;
 
-import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ServerImp extends UnicastRemoteObject implements ServerInterfaces  {
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.stage.Stage;
+
+public class ServerImp extends UnicastRemoteObject implements ServerInterfaces {
 	
-	protected ServerImp() throws RemoteException {
+
+	private ServerHomePage tester2;
+	
+	
+	protected ServerImp(ServerHomePage tempTester) throws Exception {
 		super();
-		// TODO Auto-generated constructor stub
+		System.out.println("in ServerImp Constructor");
+		this.tester2 = tempTester;
+	}
+	
+	protected ServerImp() throws Exception {
+		super();
+		System.out.println("in ServerImp Constructor");
+		
+			
 	}
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	public boolean checkUser()	{
+	public void checkUser()	{
 		System.out.println("IMP working");
-		return true;
+		
+		Platform.runLater(new Runnable() {
+			  public void run() {
+				  tester2.setTestArea("All working!!!!ALL WORKING!!!!");
+				  
+			  }
+			  });
 	}
+	
+		public void handle(ActionEvent event) {
+			// TODO Auto-generated method stub
+			
+		}
 
-}
+
+	
+		
+	}
+	
+
