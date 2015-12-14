@@ -32,7 +32,11 @@ public class ClientHomePage extends Application{
 	private Stage primaryStage;
 	private Label welcomeLabel;
 	private static final String HOST = "localhost";
-	
+	ComboBox<String> propTypeComboBox;
+	ComboBox<String> locationComboBox;
+	//Agency Names
+	ComboBox<String> agencyComboBox;	
+	ComboBox<String> priceRangeComboBox;
 
 	public static void main(String[] args) {
 		
@@ -52,22 +56,22 @@ public class ClientHomePage extends Application{
 		welcomeLabel.setTextFill(Color.web("#0076a3"));
 		
 		//Property type list
-		ComboBox<String> propTypeComboBox = new ComboBox<String>(getPropTypeList());
+		propTypeComboBox = new ComboBox<String>(getPropTypeList());
 		Label protTypeLabel = new Label("Property Type");
 		protTypeLabel.setFont(Font.font("ITC Bauhaus", FontWeight.BOLD, 12));
 		
 		//Location List(counties of Ireland)
-		ComboBox<String> locationComboBox = new ComboBox<String>(getLocationList());
+		locationComboBox = new ComboBox<String>(getLocationList());
 		Label locationLabel = new Label("Location");
 		locationLabel.setFont(Font.font("ITC Bauhaus", FontWeight.BOLD, 12));
 		
 		//Agency Names
-		ComboBox<String> agencyComboBox = new ComboBox<String>(getAgencyList());
+		agencyComboBox = new ComboBox<String>(getAgencyList());
 		Label agencyLabel = new Label("Agency");
 		agencyLabel.setFont(Font.font("ITC Bauhaus", FontWeight.BOLD, 12));
 		
-		//Agency Names
-		ComboBox<String> priceRangeComboBox = new ComboBox<String>(getPriceRangeList());
+		//Price Range
+		priceRangeComboBox = new ComboBox<String>(getPriceRangeList());
 		Label priceRangeLabel = new Label("Price Range");
 		priceRangeLabel.setFont(Font.font("ITC Bauhaus", FontWeight.BOLD, 12));
 		
@@ -133,19 +137,19 @@ public class ClientHomePage extends Application{
 		searchButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			public void handle(ActionEvent event) {
-				/*Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Error Dialog");
-				alert.setHeaderText("Look, an Error Dialog");
-				alert.setContentText("Ooops, there was an error!");
-
-				alert.showAndWait();*/
 				
-				System.out.println("Search button clicked");
+				
+				System.out.println("SearchOption: " + "Type: " +  getPropTypeComboBox()+  " Location: " + getLocationComboBox());
+				PropDetailsBean clientSearchBean = new PropDetailsBean(getPropTypeComboBox(), getLocationComboBox(), getAgencyComboBox(), getPriceRangeComboBox());
+				
 				setLabel();
+				
+				//PropDetailsBean clientSearchDetails = new PropDetailsBean()
 				
 				try {
 					ServerInterfaces checkPWD = (ServerInterfaces)Naming.lookup("rmi://" + HOST + "/ServerInterfaces");
-					checkPWD.checkUser();
+					//checkPWD.checkUser();
+					checkPWD.clientSearch(clientSearchBean);
 					
 					
 					
@@ -172,9 +176,9 @@ public class ClientHomePage extends Application{
 		
 		ObservableList<String> propTypeList = 
 			    FXCollections.observableArrayList(
-			        "Option 1",
-			        "Option 2",
-			        "Option 3"
+			        "House for Sale",
+			        "Apartment for Sale",
+			        "Duplex for Sale"
 			    );
 		return propTypeList;
 		
@@ -186,9 +190,9 @@ public class ClientHomePage extends Application{
 		
 		ObservableList<String> propLocationList = 
 			    FXCollections.observableArrayList(
-			        "Option 1",
-			        "Option 2",
-			        "Option 3"
+			        "Dublin",
+			        "Sligo",
+			        "Galway"
 			    );
 		return propLocationList;
 		
@@ -200,9 +204,9 @@ public class ClientHomePage extends Application{
 		
 		ObservableList<String> propAgencyList = 
 			    FXCollections.observableArrayList(
-			        "Agency Option 1",
-			        "Agency Option 2",
-			        "Agency Option 3"
+			        "Sherry FitzGerald",
+			        "Oates Breheny",
+			        "Elite Estate Agents"
 			    );
 		return propAgencyList;
 		
@@ -225,5 +229,39 @@ public class ClientHomePage extends Application{
 	{
 		this.welcomeLabel.setText("hellooooooo");
 	}
+
+	public String getPropTypeComboBox() {
+		return propTypeComboBox.getValue();
+	}
+
+	public void setPropTypeComboBox(ComboBox<String> propTypeComboBox) {
+		this.propTypeComboBox = propTypeComboBox;
+	}
+
+	public String getLocationComboBox() {
+		return locationComboBox.getValue();
+	}
+
+	public void setLocationComboBox(ComboBox<String> locationComboBox) {
+		this.locationComboBox = locationComboBox;
+	}
+
+	public String getAgencyComboBox() {
+		return agencyComboBox.getValue();
+	}
+
+	public void setAgencyComboBox(ComboBox<String> agencyComboBox) {
+		this.agencyComboBox = agencyComboBox;
+	}
+
+	public String getPriceRangeComboBox() {
+		return priceRangeComboBox.getValue();
+	}
+
+	public void setPriceRangeComboBox(ComboBox<String> priceRangeComboBox) {
+		this.priceRangeComboBox = priceRangeComboBox;
+	}	
+	
+	
 
 }
