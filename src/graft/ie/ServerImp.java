@@ -1,5 +1,6 @@
 package graft.ie;
 
+import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
 
 import com.sun.org.apache.bcel.internal.generic.RETURN;
@@ -12,6 +13,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterfaces {
 	
 
 	private ServerHomePage tester2;
+	String clientIP;
 	
 	
 	protected ServerImp(ServerHomePage tempTester) throws Exception {
@@ -42,6 +44,26 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterfaces {
 	
 		public void handle(ActionEvent event) {
 			// TODO Auto-generated method stub
+			
+		}
+
+	public void clientSearch(PropDetailsBean clientSearchBean) {
+			// TODO Auto-generated method stub
+		 
+		try {
+			clientIP = getClientHost();
+		} catch (ServerNotActiveException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Platform.runLater(new Runnable() {
+			  public void run() {
+			
+				tester2.setTestArea("Client IP: " + clientIP + " requesting a Property Search!!!!");
+				
+				  
+			  }
+			  });
 			
 		}
 
