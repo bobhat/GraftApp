@@ -14,6 +14,10 @@ public class DBQuery {
 	
 	private static Connection dbConnection = null;
 	private static ResultSet resultSet = null;
+	private String agencyString;
+	private String locationString;
+	private String priceRangeString;
+	private String propTypeString;
 	
 	
 	//What are our queries:
@@ -34,7 +38,45 @@ public static void testBlob() throws Exception {
 	Statement statement = dbConnection.createStatement();
 	//statement.executeQuery("INSERT INTO PHOTOS );
 }	
+
+public ArrayList<PropDetailsBean> clientSearch(PropDetailsBean searchBean){
 	
+	DBConnection temp = new DBConnection();
+	dbConnection = temp.getDBConnection();
+	
+	ArrayList<PropDetailsBean> resultBeanArrayList = new ArrayList();
+	Statement statement;
+	
+	
+	
+	
+	try {
+		statement = dbConnection.createStatement();
+		
+		System.out.println("The serach string about to add to SQL is " + searchBean.getPropTypeString());
+		String propTypeString = searchBean.getPropTypeString();
+		
+		
+		resultSet = statement.executeQuery("SELECT PROPERTY_COST,PROPERTY_ADDRESS FROM APP.PROPERTY where PROP_TYPE in (SELECT PROP_TYPE_ID from APP.PROPERTY_TYPE where PROP_TYPE_DES='" + propTypeString + "')");
+		
+		while (resultSet.next()){
+			System.out.println("in result set");
+			PropDetailsBean tempResultBean = new PropDetailsBean();
+			
+			tempResultBean.setPropCostInteger(resultSet.getInt("PROPERTY_COST"));
+			tempResultBean.setPropAddress1(resultSet.getString("PROPERTY_ADDRESS"));
+			System.out.println("Cost of House:: " + tempResultBean.getPropCostInteger());
+			resultBeanArrayList.add(tempResultBean);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	//System.out.println("DatabaseChecks.getAgentsList:::" + resultBeanArrayList.size());
+	return resultBeanArrayList;
+	
+}
+
 public static String getLName(String username) throws Exception{
 		
 		DBConnection temp = new DBConnection();
@@ -84,6 +126,38 @@ public static String getLName(String username) throws Exception{
 		return agentsArrayList;
 		
 		
+	}
+
+	public String getAgencyString() {
+		return agencyString;
+	}
+
+	public void setAgencyString(String agencyString) {
+		this.agencyString = agencyString;
+	}
+
+	public String getLocationString() {
+		return locationString;
+	}
+
+	public void setLocationString(String locationString) {
+		this.locationString = locationString;
+	}
+
+	public String getPriceRangeString() {
+		return priceRangeString;
+	}
+
+	public void setPriceRangeString(String priceRangeString) {
+		this.priceRangeString = priceRangeString;
+	}
+
+	public String getPropTypeString() {
+		return propTypeString;
+	}
+
+	public void setPropTypeString(String propTypeString) {
+		this.propTypeString = propTypeString;
 	}
 	
 	

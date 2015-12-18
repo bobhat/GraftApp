@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DBConnection {
 	
 	private Connection dbConnection = null;
-	private static String connectionString = "jdbc:derby://localhost:1527/c:\\Users\\Server\\Documents\\01. Masters DCU\\EE562\\PropertyDB;create=true;user=me;password=mine";
+	private static String connectionString = "jdbc:derby://localhost:1527/c:\\Users\\Server\\workspace\\EE562\\GraftApp\\PropertyDB\\PropertyDB;create=true;user=me;password=mine";
 	
 	//Connstructor that just set the database connection
 	public DBConnection(){
@@ -23,6 +23,7 @@ public class DBConnection {
 		System.out.println("DatabaseChecks.checkUser.working1");
 		try {
 			Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
+			System.out.println("DatabaseChecks.checkUser.working1.1");
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

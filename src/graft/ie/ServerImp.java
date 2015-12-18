@@ -2,6 +2,7 @@ package graft.ie;
 
 import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 
@@ -47,9 +48,9 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterfaces {
 			
 		}
 
-	public void clientSearch(PropDetailsBean clientSearchBean) {
+	public ArrayList<PropDetailsBean> clientSearch(PropDetailsBean clientSearchBean) {
 			// TODO Auto-generated method stub
-		 
+		ArrayList<PropDetailsBean> resultArrayList = new ArrayList<PropDetailsBean>();
 		try {
 			clientIP = getClientHost();
 		} catch (ServerNotActiveException e1) {
@@ -58,12 +59,17 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterfaces {
 		}
 		Platform.runLater(new Runnable() {
 			  public void run() {
-			
-				tester2.setTestArea("Client IP: " + clientIP + " requesting a Property Search!!!!");
 				
-				  
-			  }
-			  });
+			tester2.setTestArea("Client IP: " + clientIP + " requesting a Property Search!!!!");	  
+				 
+			} 
+	  });
+		
+		DBQuery clientSearchResult = new DBQuery();
+		
+		resultArrayList = clientSearchResult.clientSearch(clientSearchBean);
+		
+		return resultArrayList;
 			
 		}
 

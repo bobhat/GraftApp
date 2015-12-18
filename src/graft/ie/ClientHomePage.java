@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -139,20 +140,24 @@ public class ClientHomePage extends Application{
 			public void handle(ActionEvent event) {
 				
 				
-				System.out.println("SearchOption: " + "Type: " +  getPropTypeComboBox()+  " Location: " + getLocationComboBox());
-				PropDetailsBean clientSearchBean = new PropDetailsBean(getPropTypeComboBox(), getLocationComboBox(), getAgencyComboBox(), getPriceRangeComboBox());
 				
-				setLabel();
+				ArrayList<PropDetailsBean> clientSearchBeans = new ArrayList<PropDetailsBean>();
+				ClientPropertyDisplay propertyDisplay = new ClientPropertyDisplay();
+				PropDetailsBean clientSearchDetails = new PropDetailsBean();
+				clientSearchDetails.setPropTypeString(getPropTypeComboBox());
+				clientSearchDetails.setPriceRangeString(getPriceRangeComboBox());
+				clientSearchDetails.setLocationString(getLocationComboBox());
+				clientSearchDetails.setAgencyString(getAgencyComboBox());
 				
-				//PropDetailsBean clientSearchDetails = new PropDetailsBean()
+				System.out.println("SearchOption: " + "Type: " +  clientSearchDetails.getPropTypeString()+  " Location: " + clientSearchDetails.getLocationString());
 				
 				try {
-					ServerInterfaces checkPWD = (ServerInterfaces)Naming.lookup("rmi://" + HOST + "/ServerInterfaces");
-					//checkPWD.checkUser();
-					checkPWD.clientSearch(clientSearchBean);
 					
-					
-					
+					ServerInterfaces serverInt = (ServerInterfaces)Naming.lookup("rmi://" + HOST + "/ServerInterfaces");
+					clientSearchBeans = serverInt.clientSearch(clientSearchDetails);
+					System.out.println("Leaving Search::Server");
+					System.out.println(clientSearchBeans.size());
+															
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -163,11 +168,15 @@ public class ClientHomePage extends Application{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+				for (PropDetailsBean tempBeans : clientSearchBeans) {
+					System.out.println("Property Address" + tempBeans.getPropAddress1() + " Prop Cost:" + tempBeans.getPropCostInteger());
+					
+				}
+				propertyDisplay.display(clientSearchBeans);
+				primaryStage.close();
 				
 			}
 		});
-		
 		
 	}
 	
@@ -225,11 +234,7 @@ public class ClientHomePage extends Application{
 		return propPriceRangeList;
 	
 	}
-	public void setLabel()
-	{
-		this.welcomeLabel.setText("hellooooooo");
-	}
-
+	
 	public String getPropTypeComboBox() {
 		return propTypeComboBox.getValue();
 	}

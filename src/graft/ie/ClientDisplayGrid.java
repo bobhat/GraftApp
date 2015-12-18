@@ -57,31 +57,37 @@ public class ClientDisplayGrid {
 		System.out.println("(ClientDisplayGrid.ClientDisplayGrid) In constructor step 2");
 		
 		for (PropDetailsBean o : list){
-			
+			String costString, tempString;
 			System.out.println("(ClientDisplayGrid.ClientDisplayGrid) In for loop");
 			System.out.println("Price is " + list.get(i).getPriceDouble());
-			Double tempDouble = list.get(i).getPriceDouble();
+			Integer tempDouble = list.get(i).getPropCostInteger();
 			System.out.println("(ClientDisplayGrid.ClientDisplayGrid) Step1 Working");
-			String tempString = Double.toString(tempDouble);
 			
-				
+			if(tempDouble == null){
+				costString = "NA";
+			}
+			else {
+				costString = Double.toString(tempDouble);
+			}
+							
 			TextArea tempArea = new TextArea();
 			tempArea.setMaxSize(700, 100);
 			tempArea.setEditable(false);
 			this.detailTextAreas.add(i, tempArea);
-			this.detailTextAreas.get(i).setText(tempString);
-			
+			this.detailTextAreas.get(i).setText("COST: €" + costString);
+			tempString = list.get(i).getPropAddress1();
+			this.detailTextAreas.get(i).appendText("\nADDRESS: " + tempString);
 			
 			System.out.println("(ClientDisplayGrid.ClientDisplayGrid) Step3 Working");
 			HBox tempHBox = new HBox();
 			
 			
-			ImageView tempImageView = new ImageView();
-			System.out.println("(ClientDisplayGrid.ClientDisplayGrid) Step4 Working");
-			tempImageView = list.get(i).getMasterPropImageView();
+			//ImageView tempImageView = new ImageView();
+			//System.out.println("(ClientDisplayGrid.ClientDisplayGrid) Step4 Working");
+			//tempImageView = list.get(i).getMasterPropImageView();
 			
 			
-			tempHBox.getChildren().add(tempImageView);
+			//tempHBox.getChildren().add(tempImageView);
 			tempHBox.getChildren().add(this.detailTextAreas.get(i));
 			
 			System.out.println("(ClientDisplayGrid.ClientDisplayGrid) Step5 Working");
@@ -120,14 +126,14 @@ public class ClientDisplayGrid {
 	}
 	private void setWelcomeLabelTemp(){
 		
-		System.out.println("setWelcomeLabel function called");
+		System.out.println("starting setWelcomeLabel function called");
 		
 		this.welcomeLabel = new Label("graft.ie");
 		this.welcomeLabel.setFont(new Font("ITC Bauhaus", 40));
 		this.welcomeImage = new Image("image/blue-home-icon.png");
 		this.welcomeLabel.setGraphic(new ImageView(welcomeImage));
 		this.welcomeLabel.setTextFill(Color.web("#0076a3"));
-		
+		System.out.println("ending -> setWelcomeLabel function called");
 		
 	}
 	

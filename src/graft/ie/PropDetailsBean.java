@@ -15,6 +15,29 @@ public class PropDetailsBean implements Serializable{
 	String priceRangeString;
 	String propTypeString;
 	String locationString;
+	Integer propCostInteger;
+	String propAddress1;
+	
+	public String getPropAddress1() {
+		return propAddress1;
+	}
+
+	public void setPropAddress1(String propAddress1) {
+		this.propAddress1 = propAddress1;
+	}
+
+	public Integer getPropCostInteger() {
+		return propCostInteger;
+	}
+
+	public void setPropCostInteger(Integer propCostInteger) {
+		this.propCostInteger = propCostInteger;
+	}
+
+	public PropDetailsBean() {
+		super();
+		
+	}
 	
 	public PropDetailsBean(Double priceDouble) {
 		super();
