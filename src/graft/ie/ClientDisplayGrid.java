@@ -2,18 +2,19 @@ package graft.ie;
 
 import java.util.ArrayList;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class ClientDisplayGrid {
-	
+public class ClientDisplayGrid implements EventHandler<MouseEvent>{
 	
 	private GridPane propDetailsGridPane;
 	private Label welcomeLabel;
@@ -25,8 +26,10 @@ public class ClientDisplayGrid {
 	private HBox propDetailBox;
 	private ArrayList<HBox> detailsHBoxs;
 	private ArrayList<TextArea> detailTextAreas;
-	private ArrayList<ImageView> propImageViews;
+	private EventHandler<MouseEvent> eventHandler;
+	private ArrayList<PropDetailsBean> propBeansArrayList;
 	
+	@SuppressWarnings("static-access")
 	public ClientDisplayGrid(){
 		
 		System.out.println("PropGridDisplay1 constructor called");
@@ -45,23 +48,42 @@ public class ClientDisplayGrid {
 		
 	}
 	
+	
+	@SuppressWarnings("unused")
 	public ClientDisplayGrid(ArrayList<PropDetailsBean> list){
+		
+		this.propBeansArrayList = list;
 		
 		this.detailTextAreas = new ArrayList<TextArea>();
 		this.detailsHBoxs = new ArrayList<HBox>();
 		this.staticHouse1ImageView = new ImageView();
-		this.propImageViews = new ArrayList<ImageView>();
 		setStaticHouse1();
 		Integer i = 0;
 				
 		System.out.println("(ClientDisplayGrid.ClientDisplayGrid) In constructor step 2");
 		
 		for (PropDetailsBean o : list){
+		
+			this.eventHandler = new EventHandler<MouseEvent>() {
+			    public void handle(MouseEvent event) {
+			    	Object source = event.getSource();
+			        System.out.println("Handling event " + event.getSource() ); 
+			        if(source instanceof TextArea){
+			        	TextArea tempArea = (TextArea)source;
+			        	String temp1 = tempArea.getId();
+			        	Integer temp1Integer = Integer.parseInt(temp1);
+			        	
+			        	System.out.println("\n" + propBeansArrayList.get(temp1Integer).getPropAddress1());
+			        }
+ 
+			    }
+			};
+			
 			String costString, tempString;
 			System.out.println("(ClientDisplayGrid.ClientDisplayGrid) In for loop");
 			System.out.println("Price is " + list.get(i).getPriceDouble());
 			Integer tempDouble = list.get(i).getPropCostInteger();
-			System.out.println("(ClientDisplayGrid.ClientDisplayGrid) Step1 Working");
+			System.out.println("(ClientDisplayGrid.ClientDisplayGrid) Step1 Working:::" + tempDouble);
 			
 			if(tempDouble == null){
 				costString = "NA";
@@ -74,20 +96,18 @@ public class ClientDisplayGrid {
 			tempArea.setMaxSize(700, 100);
 			tempArea.setEditable(false);
 			this.detailTextAreas.add(i, tempArea);
+			
 			this.detailTextAreas.get(i).setText("COST: €" + costString);
 			tempString = list.get(i).getPropAddress1();
 			this.detailTextAreas.get(i).appendText("\nADDRESS: " + tempString);
+			this.detailTextAreas.get(i).appendText("\nID: " + i);
+			String idString = Integer.toString(i);
+			this.detailTextAreas.get(i).setId(idString);
 			
+			this.detailTextAreas.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
 			System.out.println("(ClientDisplayGrid.ClientDisplayGrid) Step3 Working");
 			HBox tempHBox = new HBox();
-			
-			
-			//ImageView tempImageView = new ImageView();
-			//System.out.println("(ClientDisplayGrid.ClientDisplayGrid) Step4 Working");
-			//tempImageView = list.get(i).getMasterPropImageView();
-			
-			
-			//tempHBox.getChildren().add(tempImageView);
+						
 			tempHBox.getChildren().add(this.detailTextAreas.get(i));
 			
 			System.out.println("(ClientDisplayGrid.ClientDisplayGrid) Step5 Working");
@@ -97,6 +117,7 @@ public class ClientDisplayGrid {
 			i++;
 		}
 		
+		
 		System.out.println("(ClientDisplayGrid.ClientDisplayGrid) Step7 Working");
 		setGridPane(detailsHBoxs);	
 		System.out.println("(ClientDisplayGrid.ClientDisplayGrid) Step8 Working");
@@ -105,21 +126,74 @@ public class ClientDisplayGrid {
 		
 	}
 	
+	@SuppressWarnings("static-access")
 	private void setGridPane(ArrayList<HBox> listHBoxs){
 		
 		propDetailsGridPane = new GridPane();
 		propDetailsGridPane.setHgap(10);
 		propDetailsGridPane.setPadding(new Insets(10, 10, 10, 10));
+		
 		Integer index = 0;
+		
 		for(HBox oBox : listHBoxs){
 			propDetailsGridPane.setConstraints(oBox, 0, index);
 			index++;
+			System.out.println("hello11" + index);
 		}
 		
 		propDetailsGridPane.getChildren().addAll(listHBoxs);
 		
 	}
 	
+	@SuppressWarnings("unused")
+	public GridPane updateDisplay(ArrayList<PropDetailsBean> list){
+		
+		propDetailsGridPane = null;
+		detailsHBoxs.clear();
+		setStaticHouse1();
+		Integer i = 0;
+				
+		System.out.println("(ClientDisplayGrid.UpdatDisplay");
+		this.detailTextAreas.clear();
+		for (PropDetailsBean o : list){
+			String costString, tempString;
+			Integer tempDouble = list.get(i).getPropCostInteger();
+			System.out.println("(ClientDisplayGrid.UpdatDisplay) Step1 Working::::" + tempDouble);
+			
+			if(tempDouble == null){
+				costString = "NA";
+			}
+			else {
+				costString = Double.toString(tempDouble);
+			}
+							
+			TextArea tempArea = new TextArea();
+			tempArea.setMaxSize(700, 100);
+			tempArea.setEditable(false);
+			
+			this.detailTextAreas.add(i, tempArea);
+			this.detailTextAreas.get(i).setText("COST: €" + costString);
+			tempString = list.get(i).getPropAddress1();
+			this.detailTextAreas.get(i).appendText("\nADDRESS: " + tempString);
+			
+			System.out.println("(ClientDisplayGrid.UpdatDisplay) Step3 Working");
+			HBox tempHBox = new HBox();
+			
+			tempHBox.getChildren().add(this.detailTextAreas.get(i));
+			
+			System.out.println("(ClientDisplayGrid.UpdatDisplay) Step5 Working");
+			this.detailsHBoxs.add(tempHBox);
+			
+			System.out.println("(ClientDisplayGrid.UpdatDisplay) Step6 Working");
+			i++;
+		}
+		
+		System.out.println("(ClientDisplayGrid.UpdatDisplay) Step7 Working");
+		setGridPane(detailsHBoxs);	
+		System.out.println("(ClientDisplayGrid.UpdatDisplay) Step8 Working");
+		return propDetailsGridPane;
+			
+	}
 	public GridPane getDisplay(){
 		
 		return propDetailsGridPane;
@@ -160,6 +234,7 @@ public class ClientDisplayGrid {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	private void setTextDisplay(){
 		
 		this.propLocationArea = new TextArea();
@@ -192,6 +267,28 @@ public class ClientDisplayGrid {
 	public ImageView getStaticHouse1(){
 		
 		return this.staticHouse1ImageView;
+		
+	}
+
+	public ArrayList<TextArea> getDetailTextAreas() {
+		return detailTextAreas;
+	}
+
+	public void setDetailTextAreas(ArrayList<TextArea> detailTextAreas) {
+		this.detailTextAreas = detailTextAreas;
+	}
+
+	public EventHandler<MouseEvent> getEventHandler() {
+		return this.eventHandler;
+	}
+
+	public void setEventHandler(EventHandler<MouseEvent> eventHandler) {
+		this.eventHandler = eventHandler;
+	}
+
+
+	public void handle(MouseEvent event) {
+		// TODO Auto-generated method stub
 		
 	}
 

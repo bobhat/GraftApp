@@ -17,7 +17,25 @@ public class PropDetailsBean implements Serializable{
 	String locationString;
 	Integer propCostInteger;
 	String propAddress1;
+	Integer numRoomInteger;
+	String agentString;
 	
+	public String getAgentString() {
+		return agentString;
+	}
+
+	public void setAgentString(String agentString) {
+		this.agentString = agentString;
+	}
+
+	public Integer getNumRoomInteger() {
+		return numRoomInteger;
+	}
+
+	public void setNumRoomInteger(Integer numRoomInteger) {
+		this.numRoomInteger = numRoomInteger;
+	}
+
 	public String getPropAddress1() {
 		return propAddress1;
 	}
