@@ -28,7 +28,7 @@ public class ClientDisplayGrid implements EventHandler<MouseEvent>{
 	private ArrayList<TextArea> detailTextAreas;
 	private EventHandler<MouseEvent> eventHandler;
 	private ArrayList<PropDetailsBean> propBeansArrayList;
-	
+		
 	@SuppressWarnings("static-access")
 	public ClientDisplayGrid(){
 		
@@ -56,8 +56,8 @@ public class ClientDisplayGrid implements EventHandler<MouseEvent>{
 		
 		this.detailTextAreas = new ArrayList<TextArea>();
 		this.detailsHBoxs = new ArrayList<HBox>();
-		this.staticHouse1ImageView = new ImageView();
-		setStaticHouse1();
+			
+		
 		Integer i = 0;
 				
 		System.out.println("(ClientDisplayGrid.ClientDisplayGrid) In constructor step 2");
@@ -107,7 +107,7 @@ public class ClientDisplayGrid implements EventHandler<MouseEvent>{
 			this.detailTextAreas.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
 			System.out.println("(ClientDisplayGrid.ClientDisplayGrid) Step3 Working");
 			HBox tempHBox = new HBox();
-						
+			
 			tempHBox.getChildren().add(this.detailTextAreas.get(i));
 			
 			System.out.println("(ClientDisplayGrid.ClientDisplayGrid) Step5 Working");
@@ -150,7 +150,6 @@ public class ClientDisplayGrid implements EventHandler<MouseEvent>{
 		
 		propDetailsGridPane = null;
 		detailsHBoxs.clear();
-		setStaticHouse1();
 		Integer i = 0;
 				
 		System.out.println("(ClientDisplayGrid.UpdatDisplay");
@@ -255,21 +254,7 @@ public class ClientDisplayGrid implements EventHandler<MouseEvent>{
 		
 		
 	}
-	
-	public void setStaticHouse1(){
 		
-		Image house2Image = new Image("image/house1.png");
-		this.staticHouse1ImageView = new ImageView();
-		this.staticHouse1ImageView.setImage(house2Image);
-		this.staticHouse1ImageView.setFitWidth(100);
-		this.staticHouse1ImageView.setPreserveRatio(true);
-	}
-	public ImageView getStaticHouse1(){
-		
-		return this.staticHouse1ImageView;
-		
-	}
-
 	public ArrayList<TextArea> getDetailTextAreas() {
 		return detailTextAreas;
 	}

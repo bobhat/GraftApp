@@ -101,7 +101,7 @@ public class AgentAddProp extends Application{
 				System.out.println("I'M HERE NOW!!");
 				callingImp.updateNewProp(newPropDetailsBean);
 				
-				
+				primaryStage.close();
 				
 			}
 		});
@@ -136,8 +136,6 @@ public class AgentAddProp extends Application{
 		Scene primaryScene = new Scene(addPropPane);
 		primaryStage = new Stage();
 		primaryStage.setTitle("Graft Agent Login");
-		//primaryStage.setMaxWidth(300);
-		//primaryStage.setMaxWidth(300);
 		primaryStage.setScene(primaryScene);
 		
 		primaryStage.show();

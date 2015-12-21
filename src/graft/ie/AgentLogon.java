@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class AgentLogon extends Application {
@@ -21,6 +22,7 @@ public class AgentLogon extends Application {
 	private TextField nameField;
 	private Stage primaryStage;
 	private ClientHomePage homePageNext;
+	private Label messageLabel;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -32,6 +34,10 @@ public class AgentLogon extends Application {
 		homePageNext = homePage;
 		primaryStage = new Stage();
 		GridPane pwdGridPane = new GridPane();
+		
+		messageLabel = new Label("Username incorrect");
+		messageLabel.setTextFill(Color.RED);
+		messageLabel.setVisible(false);
 		
 		Label nameLabel = new Label("Username: ");
 		nameField = new TextField();
@@ -46,6 +52,7 @@ public class AgentLogon extends Application {
 		pwdGridPane.add(pwdLabel, 1, 3);
 		pwdGridPane.add(pwdField, 2, 3);
 		pwdGridPane.add(okButton, 2, 4);
+		pwdGridPane.add(messageLabel, 1, 5);
 		
 		pwdGridPane.setAlignment(Pos.CENTER);
 		pwdGridPane.setHgap(10);
@@ -53,10 +60,10 @@ public class AgentLogon extends Application {
 		pwdGridPane.setPadding(new Insets(10, 10, 10, 10));
 		
 		
-		Scene primaryScene = new Scene(pwdGridPane,300, 200);
+		Scene primaryScene = new Scene(pwdGridPane,325, 200);
 		primaryStage.setTitle("Graft Agent Login");
-		primaryStage.setMaxWidth(300);
-		primaryStage.setMaxWidth(300);
+		primaryStage.setMaxWidth(325);
+		//primaryStage.setMaxWidth(300);
 		primaryStage.setScene(primaryScene);
 		primaryStage.show();
 		
@@ -67,6 +74,7 @@ public class AgentLogon extends Application {
 				AgentBean agentLogInBean = new AgentBean();
 				String tempString1 = pwdField.getText();
 				String tempString2 = nameField.getText();
+				
 				agentLogInBean.setPwdString(tempString1);
 				agentLogInBean.setUserNameString(tempString2);
 				
@@ -90,6 +98,9 @@ public class AgentLogon extends Application {
 						e.printStackTrace();
 					}
 					primaryStage.close();
+				}
+				else {
+					messageLabel.setVisible(true);
 				}
 				
 				

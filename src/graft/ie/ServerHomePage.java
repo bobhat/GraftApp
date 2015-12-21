@@ -35,9 +35,7 @@ private static final String HOST = "localhost";
 	public void start(Stage primaryStage) throws Exception {
 		
 		tempImp = new ServerImp(this);
-		System.out.println("Working 2");
 		String rmiObjectName = "rmi://" + HOST + "/ServerInterfaces";
-		System.out.println("Working 3");
 		Naming.rebind(rmiObjectName,tempImp);
 		
 		System.out.println("Binding Complete");
